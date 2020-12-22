@@ -1009,7 +1009,7 @@ eyr:1973 iyr:2017 ecl:oth cid:282 pid:695814158
 hcl:z
 
 iyr:2010 pid:661168409
-hcl:#53c696831648100
+hcl:#53c696
 hgt:186cm ecl:amb
 byr:1960
 eyr:2029

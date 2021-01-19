@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"github.com/stretchr/testify/assert"
 	"os"
+	"sort"
 	"testing"
 )
 
@@ -24,11 +25,34 @@ func TestBoardingPassInput(t *testing.T) {
 	assert.Equal(t, 838, findMax(passes))
 }
 
+func TestFindMySeat(t *testing.T)  {
+	passes := readBoardingPassFile("./input/day_5_input.txt")
+	assert.Equal(t, 714, findMySeat(passes))
+}
+
 type boardingPass struct {
 	code string
 	row int
 	col int
 	seatId int
+}
+
+type bySeatId []boardingPass
+func (x bySeatId) Len() int { return len(x) }
+func (x bySeatId) Less(i, j int) bool { return x[i].seatId < x[j].seatId }
+func (x bySeatId) Swap(i, j int) { x[i], x[j] = x[j], x[i] }
+
+func findMySeat(passes []boardingPass) int {
+	sort.Sort(bySeatId(passes))
+	n := len(passes)
+	var next int
+	for i := 1; i < n; i++ {
+		if passes[i].seatId - passes[i - 1].seatId == 2 {
+			next = i
+			break
+		}
+	}
+	return passes[next].seatId - 1
 }
 
 func findMax(passes []boardingPass) int {
